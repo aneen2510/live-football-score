@@ -1,10 +1,10 @@
-# live-football-score
+### live-football-score
 Live score calculator for a Football match
 
 Java Module contains FootballScoreBoardCalculator class which works as a Sports Dashboard 
 which have options to Record live football matches and overview of history of matches completed.
 
-#Implementation Details
+##Implementation Details
 
 Implementation consist of 5 methods for starting a game, update the game scores when there is goal scored
 by any of the team, method to notify the end of game and method for displaying the history of matches.
@@ -20,7 +20,7 @@ liveMatchDetails -> HashMap which holds the details of matches which is going li
 historyOfMatches -> ArrayList of FootballMatch Details which holds the details of matches which is over. Once the end game method get called it will add into history list.
 
 
-#Method Details
+##Method Details
 
 #startGame
 
