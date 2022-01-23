@@ -22,7 +22,7 @@ public class FootballScoreBoardCalculator {
         //Verifying Team names are valid
         if (!isValidTeamName(homeTeam, awayTeam)) {
             return "Team names are not valid";
-        }
+    }
 
         //Verifying given names have any match in existing live match team names
         //using keySet of live match hashmap
@@ -68,7 +68,7 @@ public class FootballScoreBoardCalculator {
             footballMatch.setHomeTeamScore(footballMatch.getHomeTeamScore() + homeTeamScore);
             footballMatch.setAwayTeamScore(footballMatch.getAwayTeamScore() + awayTeamScore);
             liveMatchDetails.replace(keyValue, footballMatch);
-            String output = "Score : " + homeTeam + "=" + footballMatch.getHomeTeamScore() + ":" + awayTeam + "=" + footballMatch.getAwayTeamScore();
+            String output = "Score : " + homeTeam + "-" + footballMatch.getHomeTeamScore() + ":" + awayTeam + "-" + footballMatch.getAwayTeamScore();
             System.out.println(output);
             return output;
         }
@@ -91,7 +91,7 @@ public class FootballScoreBoardCalculator {
             historyOfMatches.add(footballMatch);
 
             liveMatchDetails.remove(keyValue);
-            String output = homeTeam + " vs " + awayTeam + " Match has ended with score " + footballMatch.getHomeTeamScore() + ":" + footballMatch.getAwayTeamScore();
+            String output = homeTeam + " vs " + awayTeam + " Match has ended with score " + footballMatch.getHomeTeamScore() + "-" + footballMatch.getAwayTeamScore();
             System.out.println(output);
             return output;
         }
@@ -137,7 +137,6 @@ public class FootballScoreBoardCalculator {
                 }
                 return 0;
             }
-
         };
         return scoreComparator;
     }
