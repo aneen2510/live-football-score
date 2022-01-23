@@ -102,14 +102,6 @@ public class FootballScoreBoardCalculator {
     }
 
     /**
-     * Method created if there is any need for clearing all the details of a tournament
-     */
-    public static void clearHistory() {
-        liveMatchDetails.clear();
-        historyOfMatches().clear();
-    }
-
-    /**
      * Method to display historyOfMatches.
      * Steps
      * 1. reverse the history of matches arraylist to have order of LIFO (Because Arraylist keeps Insertion order in sorting)
@@ -121,9 +113,9 @@ public class FootballScoreBoardCalculator {
     public static List<FootballMatchDetails> historyOfMatches() {
 
         List<FootballMatchDetails> matchHistory = historyOfMatches;
-
+        //Reverese the list since arraylist have first completed match as first entry, but we need LIFO
         Collections.reverse(matchHistory);
-
+        //Sort the list based on total goal score count
         Collections.sort(matchHistory, scoreComparator);
 
         matchHistory.forEach(match ->
@@ -132,6 +124,14 @@ public class FootballScoreBoardCalculator {
 
         return matchHistory;
 
+    }
+
+    /**
+     * Method created if there is any need for clearing all the details of a tournament
+     */
+    public static void clearHistory() {
+        liveMatchDetails.clear();
+        historyOfMatches().clear();
     }
 
     /**
