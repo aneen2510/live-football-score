@@ -13,6 +13,7 @@ public class FootballScoreBoardCalculator {
     /**
      * Method to start game.
      * After verifying it will create new entry in liveMatchDetails HashMap
+     *
      * @param homeTeam Home Team name.
      * @param awayTeam Away Team name.
      * @return
@@ -22,7 +23,7 @@ public class FootballScoreBoardCalculator {
         //Verifying Team names are valid
         if (!isValidTeamName(homeTeam, awayTeam)) {
             return "Team names are not valid";
-    }
+        }
 
         //Verifying given names have any match in existing live match team names
         //using keySet of live match hashmap
@@ -45,6 +46,7 @@ public class FootballScoreBoardCalculator {
     /**
      * Method to update the existing live match scores when there is any of the team scores
      * When there is a goal scored it will add to the existing score and update the liveMatchDetail HashMap
+     *
      * @param homeTeam
      * @param homeTeamScore
      * @param awayTeam
@@ -79,6 +81,7 @@ public class FootballScoreBoardCalculator {
      * Method for end game.
      * When the game ends it will remove the match from liveMatchDetail hash map
      * and adds into historyOfMatches arraylist for Match Summary usage
+     *
      * @param homeTeam
      * @param awayTeam
      * @return
@@ -99,11 +102,20 @@ public class FootballScoreBoardCalculator {
     }
 
     /**
+     * Method created if there is any need for clearing all the details of a tournament
+     */
+    public static void clearHistory() {
+        liveMatchDetails.clear();
+        historyOfMatches().clear();
+    }
+
+    /**
      * Method to display historyOfMatches.
      * Steps
      * 1. reverse the history of matches arraylist to have order of LIFO (Because Arraylist keeps Insertion order in sorting)
      * 2. Sort the list with a comparator which sorts based on the total score in a game
      * 3. print and return the list of MatchDetails
+     *
      * @return
      */
     public static List<FootballMatchDetails> historyOfMatches() {
@@ -124,6 +136,7 @@ public class FootballScoreBoardCalculator {
 
     /**
      * Comparator created for sorting based on the total score
+     *
      * @return
      */
     private static Comparator<FootballMatchDetails> getScoreComparator() {

@@ -11,52 +11,59 @@ public class FootballScoreBoardCalculatorTest {
     public void testStartGame_Success() {
         String result = FootballScoreBoardCalculator.startGame("GER", "AUS");
         Assert.assertEquals("GER vs AUS Match Started", result);
+        FootballScoreBoardCalculator.clearHistory();
     }
 
+    //Method verifies all error scenarios in start game method are working properly
     @Test
-    public void testStartGame_errors(){
-        String result = FootballScoreBoardCalculator.startGame("","AUS");
-        Assert.assertEquals("Team names are not valid",result);
-        result = FootballScoreBoardCalculator.startGame("AUS","AUS");
-        Assert.assertEquals("Team names are not valid",result);
-        FootballScoreBoardCalculator.startGame("GER","FRA");
+    public void testStartGame_errors() {
+        String result = FootballScoreBoardCalculator.startGame("AUS", "");
+        Assert.assertEquals("Team names are not valid", result);
+        result = FootballScoreBoardCalculator.startGame("AUS", null);
+        Assert.assertEquals("Team names are not valid", result);
+        result = FootballScoreBoardCalculator.startGame("AUS", "AUS");
+        Assert.assertEquals("Team names are not valid", result);
+        FootballScoreBoardCalculator.startGame("GER", "FRA");
 
         //Checking whether there is another live match going on for the entered teams.
-        result = FootballScoreBoardCalculator.startGame("GER","AUS");
-        Assert.assertEquals("Existing live match not over for the team",result);
+        result = FootballScoreBoardCalculator.startGame("GER", "AUS");
+        Assert.assertEquals("Existing live match not over for the team", result);
     }
+
     @Test
-    public void testUpdateGame_success(){
-    FootballScoreBoardCalculator.startGame("GER","BRA");
-    String result = FootballScoreBoardCalculator.updateScore("GER",1,"BRA",2);
-    Assert.assertEquals("Score : GER-1:BRA-2",result );
+    public void testUpdateGame_success() {
+        FootballScoreBoardCalculator.startGame("Canada", "Mexico");
+        String result = FootballScoreBoardCalculator.updateScore("Canada", 1, "Mexico", 0);
+        Assert.assertEquals("Score : Canada-1:Mexico-0", result);
 
         //Checking whether the scores are getting added up
-        FootballScoreBoardCalculator.updateScore("Canada",1,"Mexico",1);
-        result = FootballScoreBoardCalculator.updateScore("Canada",1,"Mexico",2);
-        Assert.assertEquals("Score : Canada-2:Mexico-3",result);
+        FootballScoreBoardCalculator.updateScore("Canada", 1, "Mexico", 0);
+        result = FootballScoreBoardCalculator.updateScore("Canada", 0, "Mexico", 1);
+        Assert.assertEquals("Score : Canada-2:Mexico-1", result);
+        FootballScoreBoardCalculator.clearHistory();
     }
 
+    //Method verifies all error scenarios in update game method are working properly
     @Test
-    public void testUpdateGame_errors(){
-        FootballScoreBoardCalculator.startGame("Canada","Mexico");
+    public void testUpdateGame_errors() {
+        FootballScoreBoardCalculator.startGame("Canada", "Mexico");
 
         //Checking if there is a live match for the entered Team names.
-        String result = FootballScoreBoardCalculator.updateScore("Spain",1,"Mexico",1);
-        Assert.assertEquals("There is no live match for the teams",result);
+        String result = FootballScoreBoardCalculator.updateScore("Spain", 1, "Mexico", 1);
+        Assert.assertEquals("There is no live match for the teams", result);
 
         //Checking whether the team names are entered properly.
-        result = FootballScoreBoardCalculator.updateScore("",1,"Mexico",1);
-        Assert.assertEquals("Team names are not valid",result);
-        result = FootballScoreBoardCalculator.updateScore("Mexico",1,"Mexico",1);
-        Assert.assertEquals("Team names are not valid",result);
+        result = FootballScoreBoardCalculator.updateScore("", 1, "Mexico", 1);
+        Assert.assertEquals("Team names are not valid", result);
+        result = FootballScoreBoardCalculator.updateScore("Mexico", 1, "Mexico", 1);
+        Assert.assertEquals("Team names are not valid", result);
 
         //Checking whether the scores are entered properly.
-        result = FootballScoreBoardCalculator.updateScore("Canada",null,"Mexico",1);
-        Assert.assertEquals("Score values must be valid",result);
+        result = FootballScoreBoardCalculator.updateScore("Canada", null, "Mexico", 1);
+        Assert.assertEquals("Score values must be valid", result);
 
 
-         }
+    }
 
     @Test
     public void testEndGame_success() {
@@ -64,15 +71,20 @@ public class FootballScoreBoardCalculatorTest {
         FootballScoreBoardCalculator.updateScore("Sweden", 1, "Argentina", 2);
         String result = FootballScoreBoardCalculator.endGame("Sweden", "Argentina");
         Assert.assertEquals("Sweden vs Argentina Match has ended with score 1-2", result);
+        FootballScoreBoardCalculator.clearHistory();
     }
-    @Test
-    public void testEndGame_error(){
-        String result = FootballScoreBoardCalculator.endGame("Sweden","Denmark");
-        Assert.assertEquals("There is no live match for the teams",result);
-       }
 
+    //Method verifies all error scenarios in update game method are working properly
     @Test
-    public void testHistoryOfMatches(){
+    public void testEndGame_error() {
+        String result = FootballScoreBoardCalculator.endGame("Sweden", "Denmark");
+        Assert.assertEquals("There is no live match for the teams", result);
+    }
+
+    //Test method creates in the same order as requested in the challenge and expecting result list is based
+    // on total count of scores and also in the order of last end will displays first
+    @Test
+    public void testHistoryOfMatches() {
         FootballScoreBoardCalculator.startGame("Mexico", "Canada");
         FootballScoreBoardCalculator.updateScore("Mexico", 0, "Canada", 2);
         FootballScoreBoardCalculator.updateScore("Mexico", 0, "Canada", 1);
@@ -105,14 +117,14 @@ public class FootballScoreBoardCalculatorTest {
 
 
         List<FootballMatchDetails> matchDetailsList = FootballScoreBoardCalculator.historyOfMatches();
-        Assert.assertEquals(5
-                , matchDetailsList.size());
+        Assert.assertEquals(5, matchDetailsList.size());
         Assert.assertEquals("Uruguay", matchDetailsList.get(0).getHomeTeam());
+        Assert.assertEquals(6, matchDetailsList.get(0).getHomeTeamScore());
         Assert.assertEquals("Spain", matchDetailsList.get(1).getHomeTeam());
         Assert.assertEquals("Mexico", matchDetailsList.get(2).getHomeTeam());
         Assert.assertEquals("Argentina", matchDetailsList.get(3).getHomeTeam());
         Assert.assertEquals("Germany", matchDetailsList.get(4).getHomeTeam());
-
+        FootballScoreBoardCalculator.clearHistory();
 
     }
 }
